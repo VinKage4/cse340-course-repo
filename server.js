@@ -18,25 +18,29 @@ app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => {
   res.render('index', {
-    title: 'Home'
+    title: 'Home',
+    year: new Date().getFullYear()
   });
 });
 
 app.get('/organizations', (req, res) => {
   res.render('organizations', {
-    title: 'Organizations'
+    title: 'Organizations',
+    year: new Date().getFullYear()
   });
 });
 
 app.get('/projects', (req, res) => {
   res.render('projects', {
-    title: 'Projects'
+    title: 'Projects',
+    year: new Date().getFullYear()
   });
 });
 
 app.get('/categories', (req, res) => {
   res.render('categories', {
-    title: 'Categories'
+    title: 'Categories',
+    year: new Date().getFullYear()
   });
 });
 
