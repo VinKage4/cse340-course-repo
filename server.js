@@ -72,10 +72,20 @@ app.get('/categories', async (req, res) => {
 });
 
 app.listen(PORT, async () => {
+  console.log(`Server is starting at http://127.0.0.1:${PORT}`);
+  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+
+  const dbUrl = process.env.DB_URL || '';
+  const isPlaceholder = !dbUrl || /(?:\.{3}|<|>)/.test(dbUrl);
+
+  if (isPlaceholder) {
+    console.warn('DB_URL is not set or looks like a placeholder; skipping database connection test.');
+    return;
+  }
+
   try {
     await testConnection();
-    console.log(`Server is running at http://127.0.0.1:${PORT}`);
-    console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+    console.log('Database connection successful');
   } catch (error) {
     console.error('Error connecting to the database:', error);
   }
