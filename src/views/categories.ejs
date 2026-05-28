@@ -1,17 +1,12 @@
 <%- include('partials/header') %>
 
-<h1><%= title %></h1>
-
-<p>
-  These are the current service project categories:
-</p>
+<h2>Service Project Categories</h2>
 
 <ul>
-  <% categories.forEach(category => { %>
-    <li>
-      <%= category.name %>
-    </li>
-  <% }); %>
+  <li>Environmental</li>
+  <li>Educational</li>
+  <li>Community Service</li>
+  <li>Health and Wellness</li>
 </ul>
 
 <%- include('partials/footer') %>
