@@ -1,5 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
+dotenv.config();
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { getAllProjects }
@@ -10,7 +11,7 @@ import { testConnection }
   from './src/models/db.js';
 import { getAllOrganizations }
   from './src/models/organizations.js';
-dotenv.config();
+
 
 const app = express();
 
