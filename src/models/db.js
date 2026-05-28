@@ -1,19 +1,38 @@
+import 'dotenv/config';
 import { Pool } from 'pg';
 
 /**
  * Connection pool for PostgreSQL database.
- * 
- * A connection pool maintains a set of reusable database connections
- * to avoid the overhead of creating new connections for each request.
- * This improves performance and reduces load on the database server.
- * 
- * Uses a connection string from environment variables for simplified setup.
- * The connection string format is:
- * postgresql://username:password@host:port/database
+ *
+ * We coerce and validate the incoming `DB_URL` environment variable to ensure
+ * the password (and other parts) are proper strings before passing the
+ * connection string to the `pg` Pool. In production we enable basic SSL so
+ * services like Render/Postgres work correctly.
  */
+const rawDbUrl = process.env.DB_URL || '';
+const connectionString = typeof rawDbUrl === 'string' ? rawDbUrl.trim() : '';
+
+let sslConfig = false;
+if (process.env.NODE_ENV === 'production') {
+    // Many managed Postgres providers require TLS; allow self-signed certs.
+    sslConfig = { rejectUnauthorized: false };
+}
+
+// Basic validation: try to parse the URL and warn if password is missing or not a string.
+if (connectionString) {
+    try {
+        const parsed = new URL(connectionString);
+        if (typeof parsed.password !== 'string' || parsed.password === '') {
+            console.warn('DB_URL password is missing or empty; check your environment variables');
+        }
+    } catch (err) {
+        console.warn('DB_URL appears to be invalid:', err.message);
+    }
+}
+
 const pool = new Pool({
-    connectionString: process.env.DB_URL,
-    ssl: true
+    connectionString: connectionString || undefined,
+    ssl: sslConfig,
 });
 
 /**
@@ -84,6 +103,7 @@ const testConnection = async() => {
         return true;
     } catch (error) {
         console.error('Database connection failed:', error.message);
+        // Re-throw the original Error so calling code keeps the stack trace
         throw error;
     }
 };
