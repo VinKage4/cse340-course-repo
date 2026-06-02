@@ -15,6 +15,10 @@ import {
 import { showCategoriesPage } from './controllers/categories.js';
 
 import { testErrorPage } from './controllers/errors.js';
+import {
+  showNewOrganizationForm,
+  processNewOrganizationForm
+} from './controllers/organizations.js';
 
 const router = express.Router();
 
@@ -38,5 +42,15 @@ router.get('/categories', showCategoriesPage);
 
 // Test route for 500 errors
 router.get('/test-error', testErrorPage);
+
+router.get(
+  '/new-organization',
+  showNewOrganizationForm
+);
+
+router.post(
+  '/new-organization',
+  processNewOrganizationForm
+);
 
 export default router;
