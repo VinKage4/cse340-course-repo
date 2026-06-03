@@ -8,6 +8,7 @@ import {
   showNewOrganizationForm,
   showEditOrganizationForm,
   processNewOrganizationForm,
+  processEditOrganizationForm,
   organizationValidation
 } from './controllers/organizations.js';
 
@@ -58,6 +59,12 @@ router.post(
   '/new-organization',
   organizationValidation,
   processNewOrganizationForm
+);
+
+router.post(
+  '/edit-organization/:id',
+  organizationValidation,
+  processEditOrganizationForm
 );
 
 export default router;
