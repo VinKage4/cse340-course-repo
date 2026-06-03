@@ -1,3 +1,5 @@
+import session from 'express-session';
+import flash from './src/middleware/flash.js';
 import express from 'express';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -16,6 +18,8 @@ const app = express();
 const PORT =
     process.env.PORT || 3000;
 
+const SESSION_SECRET = process.env.SESSION_SECRET;
+
 const __filename =
     fileURLToPath(import.meta.url);
 
@@ -30,6 +34,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 
 app.set('views', path.join(__dirname, 'src', 'views'));
+
+app.use(session({
+  secret: SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    maxAge: 60 * 60 * 1000
+  }
+}));
+
+app.use(flash);
 
 // Middleware to log all incoming requests
 app.use((req, res, next) => {

@@ -63,6 +63,26 @@ const processNewOrganizationForm = async (req, res) => {
     logoFilename
   );
 
+const processNewOrganizationForm = async (req, res) => {
+  const { name, description, contactEmail } = req.body;
+
+  const logoFilename = 'placeholder-logo.png';
+
+  const organizationId = await createOrganization(
+    name,
+    description,
+    contactEmail,
+    logoFilename
+  );
+
+  req.flash(
+    'success',
+    'Organization added successfully!'
+  );
+
+  res.redirect(`/organization/${organizationId}`);
+};   
+    
   res.redirect(`/organization/${organizationId}`);
 };
 
