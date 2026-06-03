@@ -1,12 +1,27 @@
 <%- include('partials/header') %>
 
-<h2>Service Project Categories</h2>
+<main>
 
-<ul>
-  <li>Environmental</li>
-  <li>Educational</li>
-  <li>Community Service</li>
-  <li>Health and Wellness</li>
-</ul>
+    <h1><%= title %></h1>
+
+    <ul>
+        <% categories.forEach(category => { %>
+            <li>
+                <%= category.name %>
+
+                <a href="/edit-category/<%= category.category_id %>">
+                    Edit
+                </a>
+            </li>
+        <% }) %>
+    </ul>
+
+    <p>
+        <a href="/new-category">
+            Add a New Category
+        </a>
+    </p>
+
+</main>
 
 <%- include('partials/footer') %>
