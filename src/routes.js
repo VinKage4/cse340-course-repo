@@ -14,7 +14,10 @@ import {
 
 import {
     showProjectsPage,
-    showProjectDetailsPage
+    showProjectDetailsPage,
+    showNewProjectForm,
+    processNewProjectForm,
+    projectValidation
 } from './controllers/projects.js';
 
 import { showCategoriesPage } from './controllers/categories.js';
@@ -45,11 +48,20 @@ router.get(
     showProjectDetailsPage
 );
 
+router.get('/new-project', showNewProjectForm);
+
+router.post(
+    '/new-project',
+    projectValidation,
+    processNewProjectForm
+);
+
 router.get('/categories', showCategoriesPage);
 
 // Test route for 500 errors
 router.get('/test-error', testErrorPage);
 
+// Route to process edit organization form
 router.get(
   '/new-organization',
   showNewOrganizationForm
