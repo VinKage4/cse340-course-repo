@@ -1,7 +1,8 @@
 import {
     getUpcomingProjects,
     getProjectDetails,
-    createProject
+    createProject,
+    updateProject
 } from '../models/projects.js';
 
 import {
@@ -145,10 +146,79 @@ const processNewProjectForm = async (req, res, next) => {
     }
 };
 
+const showEditProjectForm = async (req, res, next) => {
+    try {
+        const projectId =
+            req.params.id;
+
+        const project =
+            await getProjectDetails(projectId);
+
+        const organizations =
+            await getAllOrganizations();
+
+        res.render('edit-project', {
+            title: 'Edit Service Project',
+            project,
+            organizations,
+            year: new Date().getFullYear()
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+const processEditProjectForm = async (req, res, next) => {
+    try {
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            errors.array().forEach(error => {
+                req.flash('error', error.msg);
+            });
+
+            return res.redirect(
+                `/edit-project/${req.params.id}`
+            );
+        }
+
+        const projectId =
+            req.params.id;
+
+        const {
+            title,
+            description,
+            location,
+            date,
+            organizationId
+        } = req.body;
+
+        await updateProject(
+            projectId,
+            title,
+            description,
+            location,
+            date,
+            organizationId
+        );
+
+        req.flash(
+            'success',
+            'Service project updated successfully!'
+        );
+
+        res.redirect(`/project/${projectId}`);
+    } catch (error) {
+        next(error);
+    }
+};
+
 export {
     showProjectsPage,
     showProjectDetailsPage,
     showNewProjectForm,
     processNewProjectForm,
+    showEditProjectForm,
+    processEditProjectForm,
     projectValidation
 };
