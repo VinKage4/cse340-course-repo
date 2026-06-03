@@ -20,7 +20,11 @@ import {
     projectValidation
 } from './controllers/projects.js';
 
-import { showCategoriesPage } from './controllers/categories.js';
+import {
+  showCategoriesPage,
+  showAssignCategoriesForm,
+  processAssignCategoriesForm
+} from './controllers/categories.js';
 
 import { testErrorPage } from './controllers/errors.js';
 
@@ -60,6 +64,17 @@ router.get('/categories', showCategoriesPage);
 
 // Test route for 500 errors
 router.get('/test-error', testErrorPage);
+
+// Routes for assigning categories to projects
+router.get(
+  '/assign-categories/:projectId',
+  showAssignCategoriesForm
+);
+
+router.post(
+  '/assign-categories/:projectId',
+  processAssignCategoriesForm
+);
 
 // Route to process edit organization form
 router.get(
