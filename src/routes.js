@@ -3,8 +3,11 @@ import express from 'express';
 import { showHomePage } from './controllers/index.js';
 
 import {
-    showOrganizationsPage,
-    showOrganizationDetailsPage
+  showOrganizationsPage,
+  showOrganizationDetailsPage,
+  showNewOrganizationForm,
+  processNewOrganizationForm,
+  organizationValidation
 } from './controllers/organizations.js';
 
 import {
@@ -15,10 +18,6 @@ import {
 import { showCategoriesPage } from './controllers/categories.js';
 
 import { testErrorPage } from './controllers/errors.js';
-import {
-  showNewOrganizationForm,
-  processNewOrganizationForm
-} from './controllers/organizations.js';
 
 const router = express.Router();
 
@@ -50,6 +49,7 @@ router.get(
 
 router.post(
   '/new-organization',
+  organizationValidation,
   processNewOrganizationForm
 );
 
