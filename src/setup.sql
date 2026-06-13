@@ -14,22 +14,11 @@ CREATE TABLE organization (
     logo_filename VARCHAR(255)
 );
 
-INSERT INTO organization (name, description, contact_email)
-VALUES (
-        'BrightFuture Builders',
-        'Helps improve local communities through construction, cleanup, and repair projects.',
-        'contact@brightfuture.org'
-    ),
-    (
-        'GreenHarvest Growers',
-        'Supports food access, gardening, and local agriculture service projects.',
-        'info@greenharvest.org'
-    ),
-    (
-        'UnityServe Volunteers',
-        'Connects volunteers with community, education, and service opportunities.',
-        'hello@unityserve.org'
-    );
+INSERT INTO organization (name, description, contact_email, logo_filename)
+VALUES
+('BrightFuture Builders', 'Helps improve local communities through construction, cleanup, and repair projects.', 'contact@brightfuture.org', 'brightfuture.png'),
+('GreenHarvest Growers', 'Supports food access, gardening, and local agriculture service projects.', 'info@greenharvest.org', 'greenharvest.png'),
+('UnityServe Volunteers', 'Connects volunteers with community, education, and service opportunities.', 'hello@unityserve.org', 'unityserve.png');
 -- ========================================
 -- Service Project Table
 -- ========================================
