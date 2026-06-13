@@ -2,6 +2,8 @@ DROP TABLE IF EXISTS project_category;
 DROP TABLE IF EXISTS service_project;
 DROP TABLE IF EXISTS category;
 DROP TABLE IF EXISTS organization;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS roles;
 
 -- ========================================
 -- Organization Table
