@@ -33,6 +33,14 @@ import {
   categoryValidation
 } from './controllers/categories.js';
 
+import {
+  showUserRegistrationForm,
+  processUserRegistrationForm,
+  showLoginForm,
+  processLoginForm,
+  processLogout
+} from './controllers/users.js';
+
 import { testErrorPage } from './controllers/errors.js';
 
 const router = express.Router();
@@ -131,5 +139,14 @@ router.post(
 
 // Test route for 500 errors
 router.get('/test-error', testErrorPage);
+
+// User registration routes
+
+router.get('/register', showUserRegistrationForm);
+router.post('/register', processUserRegistrationForm);
+
+router.get('/login', showLoginForm);
+router.post('/login', processLoginForm);
+router.get('/logout', processLogout);
 
 export default router;
