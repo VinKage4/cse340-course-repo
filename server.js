@@ -62,7 +62,7 @@ app.use((req, res, next) => {
 });
 
 // Use routes from src/routes.js
-app.use(router);
+app.use('/', router);
 
 // Catch-all route for 404 errors
 app.use((req, res, next) => {
