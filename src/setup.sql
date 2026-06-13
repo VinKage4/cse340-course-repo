@@ -1,3 +1,8 @@
+DROP TABLE IF EXISTS project_category;
+DROP TABLE IF EXISTS service_project;
+DROP TABLE IF EXISTS category;
+DROP TABLE IF EXISTS organization;
+
 -- ========================================
 -- Organization Table
 -- ========================================
@@ -5,8 +10,10 @@ CREATE TABLE organization (
     organization_id SERIAL PRIMARY KEY,
     name VARCHAR(150) NOT NULL,
     description TEXT,
-    contact_email VARCHAR(255)
+    contact_email VARCHAR(255),
+    logo_filename VARCHAR(255)
 );
+
 INSERT INTO organization (name, description, contact_email)
 VALUES (
         'BrightFuture Builders',
