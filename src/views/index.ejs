@@ -6,4 +6,10 @@
   Our mission is to connect volunteers with service opportunities.
 </p>
 
+<% if (isLoggedIn) { %>
+  <p>
+    <a href="/dashboard">My Dashboard</a>
+  </p>
+<% } %>
+
 <%- include('partials/footer') %>
