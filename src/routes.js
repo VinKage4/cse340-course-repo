@@ -41,7 +41,8 @@ import {
   processLogout,
   requireLogin,
   showDashboard,
-  requireRole
+  requireRole,
+  showUsersPage
 } from './controllers/users.js';
 
 import { testErrorPage } from './controllers/errors.js';
@@ -169,6 +170,12 @@ router.get(
   '/dashboard',
   requireLogin,
   showDashboard
+);
+
+router.get(
+  '/users',
+  requireRole('admin'),
+  showUsersPage
 );
 
 export default router;
