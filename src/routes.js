@@ -45,6 +45,11 @@ import {
   showUsersPage
 } from './controllers/users.js';
 
+import {
+  processAddVolunteer,
+  processRemoveVolunteer
+} from './controllers/volunteers.js';
+
 import { testErrorPage } from './controllers/errors.js';
 
 const router = express.Router();
@@ -176,6 +181,20 @@ router.get(
   '/users',
   requireRole('admin'),
   showUsersPage
+);
+
+// Volunteer routes
+
+router.post(
+  '/volunteer/:projectId',
+  requireLogin,
+  processAddVolunteer
+);
+
+router.post(
+  '/volunteer/:projectId/remove',
+  requireLogin,
+  processRemoveVolunteer
 );
 
 export default router;

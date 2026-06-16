@@ -14,6 +14,10 @@ import {
     validationResult
 } from 'express-validator';
 
+import {
+    isUserVolunteering    
+} from '../models/volunteers.js';
+
 const NUMBER_OF_UPCOMING_PROJECTS = 5;
 
 const projectValidation = [
@@ -68,29 +72,36 @@ const showProjectsPage = async (req, res, next) => {
     }
 };
 
-const showProjectDetailsPage = async (
-    req,
-    res,
-    next
-) => {
-    try {
-        const projectId =
-            req.params.id;
+const showProjectDetailsPage = async (req, res, next) => {
+  try {
+    const projectId = req.params.id;
 
-        const project =
-            await getProjectDetails(
-                projectId
-            );
+    const project = await getProjectDetails(projectId);
 
-        res.render('project', {
-            title: 'Project Details',
-            project,
-            year: new Date().getFullYear()
-        });
-    } catch (error) {
-        next(error);
+    if (!project) {
+      return res.status(404).render('404', {
+        title: 'Project Not Found'
+      });
     }
-};
+
+    let isVolunteering = false;
+
+    if (req.session.user) {
+      isVolunteering = await isUserVolunteering(
+        req.session.user.user_id,
+        projectId
+      );
+    }
+
+    res.render('project', {
+      title: project.title,
+      project,
+      isVolunteering
+    });
+  } catch (error) {
+    next(error);
+  }
+}
 
 const showNewProjectForm = async (req, res, next) => {
     try {

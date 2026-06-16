@@ -8,9 +8,61 @@
 <p>Username: <%= email %></p>
 
 <% if (user && user.role_name === 'admin') { %>
+
   <p>
     <a href="/users">View Registered Users</a>
   </p>
+<% } %>
+
+<hr>
+
+<h2>My Volunteer Projects</h2>
+
+<% if (!volunteerProjects || volunteerProjects.length === 0) { %>
+
+  <p>You have not signed up to volunteer for any projects yet.</p>
+
+<% } else { %>
+
+  <ul>
+    <% volunteerProjects.forEach(project => { %>
+
+```
+  <li>
+    <h3>
+      <a href="/project/<%= project.project_id %>">
+        <%= project.title %>
+      </a>
+    </h3>
+
+    <p><%= project.description %></p>
+
+    <p>
+      <strong>Organization:</strong>
+      <%= project.organization_name %>
+    </p>
+
+    <p>
+      <strong>Location:</strong>
+      <%= project.location %>
+    </p>
+
+    <form
+      action="/volunteer/<%= project.project_id %>/remove"
+      method="POST">
+
+      <button type="submit">
+        Remove Me as Volunteer
+      </button>
+
+    </form>
+  </li>
+
+<% }) %>
+```
+
+  </ul>
+
 <% } %>
 
 <%- include('partials/footer') %>

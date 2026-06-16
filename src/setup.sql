@@ -228,3 +228,15 @@ CREATE TABLE users (
     role_id INTEGER REFERENCES roles(role_id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+-- ========================================
+-- Project Volunteer Junction Table 
+-- ========================================
+
+CREATE TABLE IF NOT EXISTS project_volunteer (
+  volunteer_id SERIAL PRIMARY KEY,
+  user_id INTEGER NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
+  project_id INTEGER NOT NULL REFERENCES service_project(project_id) ON DELETE CASCADE,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE(user_id, project_id)
+);
